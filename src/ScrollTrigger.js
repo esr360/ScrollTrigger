@@ -1,12 +1,16 @@
-//=================================================================
-// Data-Manipulate
-//=================================================================
+/*-----------------------------------------------------------------
+
+ScrollTrigger
+Made by @esr360
+http://github.com/esr360/ScrollTrigger
+	
+-----------------------------------------------------------------*/
 		
-function dataM() {
+function scrollTrigger() {
 	
 	// define data types
-	var elReveal = $('[data-reveal]'),
-		elReverseReveal = $('[data-reverse-reveal]'),
+	var elReveal = $('[data-trigger]'),
+		elReverseReveal = $('[data-trigger-reverse]'),
 		elHover = $('[data-hover]'),
 		elActive = $('.inactive');
 		
@@ -32,7 +36,7 @@ function dataM() {
 	elReveal.each(function() {
 		
 		var el = $(this),
-			styles = el.data('reveal');
+			styles = el.data('trigger');
 							
 		$(window).bind("load scroll", function() {
 			
@@ -49,7 +53,7 @@ function dataM() {
 	elReverseReveal.each(function() {
 		
 		var el = $(this),
-			styles = el.data('reverse-reveal'),
+			styles = el.data('trigger-reverse'),
 			cachedStyles = null;
 			
 		// cache current inline styles
@@ -109,6 +113,6 @@ function dataM() {
 		
 	}); // elActive
 	
-} // dataM()
+} // scrollTrigger()
 
-$(dataM);
+$(scrollTrigger);
