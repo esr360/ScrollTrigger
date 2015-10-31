@@ -32,7 +32,7 @@ function scrollTrigger() {
         }
     }
     
-    // [data-reveal]
+    // [data-trigger]
     elReveal.each(function() {
         
         var el = $(this),
@@ -49,7 +49,7 @@ function scrollTrigger() {
     
     }); // elReveal
     
-    // [data-reverse-reveal]
+    // [data-trigger-reverse]
     elReverseReveal.each(function() {
         
         var el = $(this),
