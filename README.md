@@ -1,2 +1,2 @@
 # ScrollTrigger
-Dynamically add CSS to elements as they become visible in the viewport.
+Dynamically add styles to elements as they become visible in the viewport.
