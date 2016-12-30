@@ -1,60 +1,59 @@
-/*-----------------------------------------------------------------
-
-ScrollTrigger
-Made by @esr360
-http://github.com/esr360/ScrollTrigger
-	
------------------------------------------------------------------*/
-		
+/**
+ * ScrollTrigger
+ * Made by @esr360
+ * http://github.com/esr360/ScrollTrigger
+ */		
 function scrollTrigger() {
 	
     // define data types
-    var elReveal = $('[data-trigger]'),
-        elReverseReveal = $('[data-trigger-reverse]'),
-        elHover = $('[data-hover]'),
-        elActive = $('.inactive');
+    var elReveal        = $('[data-trigger]');
+    var elReverseReveal = $('[data-trigger-reverse]');
+    var elHover         = $('[data-hover]');
+    var elActive        = $('.inactive');
         
     // function to decide if element is in viewport
-    $.fn.visible = function(whole){
-        // if the entire element is in view
-        if (whole) {
-            var a = this.offset().top + this.height();
+    $.fn.visible = function(startingPoint){
+        // set default option
+        startingPoint = startingPoint || 'top';
+
         // if any part of the element is in view
-        } else {
+        if (startingPoint == 'top') {
             var a = this.offset().top;
         }
-        var b = $(window).scrollTop() + $(window).height();
-        // is the element in the viewport?
-        if (a < b) {
-            return true;
-        } else {
-            return false;
+
+        // if majotiy of the element is in view 
+        else if (startingPoint == 'middle') {
+            var a = this.offset().top + (this.height() / 2);
         }
+
+        // if the entire element is in view
+        else if (startingPoint == 'bottom') {
+            var a = this.offset().top + this.height();
+        }
+
+        var b = $(window).scrollTop() + $(window).height();
+
+        // is the element in the viewport?
+        return a < b ? true : false;
     }
-    
+
     // [data-trigger]
     elReveal.each(function() {
-        
-        var el = $(this),
-            styles = el.data('trigger');
+        var el = $(this);
+        var styles = el.data('trigger');
                             
-        $(window).bind("load scroll", function() {
-            
-            // if element is visible in viewpoint
-            if (el.visible(true)) {
+        $(window).bind('load scroll', function() {
+            if (el.visible('middle')) {
                 el.attr('style', styles);
             }
-            
         });	
-    
-    }); // elReveal
+    });
     
     // [data-trigger-reverse]
     elReverseReveal.each(function() {
-        
-        var el = $(this),
-            styles = el.data('trigger-reverse'),
-            cachedStyles = null;
+        var el = $(this);
+        var styles = el.data('trigger-reverse');
+        var cachedStyles = null;
             
         // cache current inline styles
         if (typeof(el.attr('style')) != 'undefined') {
@@ -64,25 +63,20 @@ function scrollTrigger() {
         // add new styles to element
         el.attr('style', styles)
                             
-        $(window).bind("load scroll", function() {
-            // if element is visible in viewpoint
-            if (el.visible(false)) {
+        $(window).bind('load scroll', function() {
+            if (el.visible('top')) {
                 // reset the styles
                 el.attr('style', cachedStyles);
             }
-            
         });	
-    
-    }); // elReverseReveal
+    });
     
     // [data-hover]
     elHover.each(function(){
-        
-        var el = $(this),
-            styles = el.data('hover');
+        var el = $(this);
+        var styles = el.data('hover');
                         
         el.mouseenter(function(){
-            
             // cache current inline styles
             cachedStyles = null;
             if (typeof(el.attr('style')) != 'undefined') {
@@ -96,22 +90,15 @@ function scrollTrigger() {
             $(this).mouseleave(function(){
                 el.attr('style', cachedStyles);
             });
-            
         });
-            
-    }); // elHover
+    });
     
     // .inactive
     elActive.each(function(){
-        
-        // if element is visible in viewpoint
-        if ($(this).visible(true)) {
-            $(this)
-                .removeClass('inactive')
-                .addClass('active');
+        if ($(this).visible('bottom')) {
+            $(this).removeClass('inactive').addClass('active');
         }
-        
-    }); // elActive
+    });
 	
 } // scrollTrigger()
 
